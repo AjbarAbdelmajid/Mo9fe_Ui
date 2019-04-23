@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
+import Components from './component';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter } from 'react-router-dom'
 
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+        <BrowserRouter>
+          <div className="App">
+              <Components/>
 
-      </div>
+          </div>
+        </BrowserRouter>
+
     );
   }
 }
