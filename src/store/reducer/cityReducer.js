@@ -1,4 +1,4 @@
-import { GET_CATEGORIES_BEGIN , GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE} from '../action/cityAction'
+import { GET_Cities_BEGIN , GET_Cities_SUCCESS, GET_Cities_FAILURE} from '../action/cityAction'
 
 const initialState = {
     items: [],
@@ -8,18 +8,18 @@ const initialState = {
 
 const cityReducer = (state = initialState, action)=>{
     switch (action.type) {
-        case GET_CATEGORIES_BEGIN:
+        case GET_Cities_BEGIN:
             return {
                 ...state,
                 loading: true
             };
-        case GET_CATEGORIES_SUCCESS:
+        case GET_Cities_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 items: action.payload.cities
             };
-        case GET_CATEGORIES_FAILURE:
+        case GET_Cities_FAILURE:
             return {
                 ...state,
                 loading: false,

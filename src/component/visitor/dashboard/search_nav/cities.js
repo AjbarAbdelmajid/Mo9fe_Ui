@@ -6,10 +6,8 @@ import { Navbar, Form } from 'react-bootstrap';
 
 class CitiesList extends Component {
 
-    componentWillMount(){
-        this.props.dispatch(fetchCities()).then(()=>{
-            console.log('all done ');
-        });
+    componentDidMount(){
+        this.props.fetchCities()
     }
 
     render(){
@@ -20,7 +18,7 @@ class CitiesList extends Component {
         }
         if (error){
             this.errorHandlerComponent('cities')
-        } else {
+        }
             return (
                 <Navbar.Brand className="brandItems">
                     <Form.Control as="select" className="SearchItems">
@@ -32,7 +30,6 @@ class CitiesList extends Component {
 
                 </Navbar.Brand>
             )
-        }
     }
 
     loaderHandlerComponent = (section)=>{
@@ -49,9 +46,6 @@ class CitiesList extends Component {
             <Navbar.Brand className="brandItems">
                 <Form.Control as="select" className="SearchItems">
                     <option hidden key={section}>network error</option>
-                    {setTimeout(()=>{
-                        alert('Oops there is a problem connecting with server  try after a minute')
-                    },1000)}
                 </Form.Control>
             </Navbar.Brand>
         )
@@ -66,6 +60,10 @@ const mapStateToProps = (state) =>{
         error: state.city.error,
     }
 };
+const mapDispatchToProps ={
+    fetchCities: ()=> fetchCities()
+};
 
 
-export default connect(mapStateToProps)(CitiesList)
+
+export default connect(mapStateToProps, mapDispatchToProps)(CitiesList)

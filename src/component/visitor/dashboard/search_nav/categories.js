@@ -6,8 +6,8 @@ import { Navbar, Form } from 'react-bootstrap';
 
 class CategoriesList extends Component {
 
-    componentDidMount() {
-        this.props.dispatch(fetchCategories());
+    componentWillMount() {
+        this.props.fetchCategories();
     }
 
     render() {
@@ -36,8 +36,7 @@ class CategoriesList extends Component {
                 </Navbar.Brand>
             )
         }
-        if( categories.length) {
-            console.log('sfsdf',categories);
+        else {
             return (
                 <Navbar.Brand className="brandItems">
                     <Form.Control as="select" className="SearchItems">
@@ -50,23 +49,19 @@ class CategoriesList extends Component {
                 </Navbar.Brand>
             )
         }
-        return (
-            <Navbar.Brand className="brandItems">
-                <Form.Control as="select" className="SearchItems">
-                    <option hidden key='categories'>Loading...</option>
-                </Form.Control>
-            </Navbar.Brand>
-        )
     }
 }
 
-const mapCategoryStateToProps = (state) => {
-
+const mapStateToProps = (state) => {
     return {
         categories: state.category.items,
         categoriesLoading: state.category.loading,
         categoryError: state.category.error
     }
 };
+const mapDispatchToProps ={
+            fetchCategories: ()=> fetchCategories()
+};
 
-export default connect(mapCategoryStateToProps)(CategoriesList)
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList)

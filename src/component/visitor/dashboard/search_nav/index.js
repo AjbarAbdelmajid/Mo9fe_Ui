@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Navbar, Form } from 'react-bootstrap';
 import './index.css';
-//import CitiesList from './cities'
+import CitiesList from './cities'
 import CategoriesList from './categories'
 
 class Searching extends Component {
@@ -12,7 +12,7 @@ class Searching extends Component {
                 <div className="container-fluid pt-5 ">
                     <Navbar className="searchNav">
 
-                        {/*<CitiesList/>*/}
+                        <CitiesList/>
                         <CategoriesList/>
                         {this.dropDownGenerator('look for', ['o', 'io'])}
 

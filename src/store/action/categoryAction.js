@@ -12,15 +12,14 @@ export const fetchCategories = ()=>{
 
         //get data from api
         return axios.get(`${config.baseUrl}sort/public/list/categories`)
-            .then(response=>{
-                console.log(response);
-                if (response.statusText !== 'OK'){
-                    throw Error(response.status)
+            .then(data=>{
+                if (data.statusText !== 'OK'){
+                    dispatch(grabbingCategoriesDataFail(data.statusText))
                 } else {
-                    dispatch(grabbingCategoriesDataSuccess(response.data))
+                    dispatch(grabbingCategoriesDataSuccess(data.data))
                 }
-            }).catch(err => {
-                dispatch(grabbingCategoriesDataFail(err.message))})
+            }).catch(err => {throw Error(err)
+                })
     }
 };
 
@@ -32,11 +31,11 @@ export const grabbingCategoryBegging =  ()=>({
 // to store the grabbed data from api
 export const grabbingCategoriesDataSuccess = categories =>({
     type: GET_CATEGORIES_SUCCESS,
-    payload: {categories}
+    loaded: {categories}
 });
 
 // in case if an error happened
 export const grabbingCategoriesDataFail = error =>({
     type: GET_CATEGORIES_FAILURE,
-    payload: {error}
+    loaded: {error}
 });

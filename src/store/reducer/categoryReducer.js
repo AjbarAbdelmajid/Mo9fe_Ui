@@ -17,13 +17,13 @@ const categoryReducer = (state = initialState, action)=>{
             return {
                 ...state,
                 loading: false,
-                items: action.payload.categories
+                items: action.loaded.categories
             };
         case GET_CATEGORIES_FAILURE:
             return {
                 ...state,
                 loading: false,
-                error: action.payload.error,
+                error: action.loaded.error,
             };
         default:
             return state;
