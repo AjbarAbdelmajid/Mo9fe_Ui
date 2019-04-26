@@ -7,7 +7,7 @@ const Logoutlink = () => {
 
     return(
         <div className=" form-check-inline " >
-            <NavItem inverse fluid><NavLink to='/signin' className="btn btn-outline-primary mr-2">signin</NavLink></NavItem>
+            <NavItem inverse="true" fluid ="true"><NavLink to='/signin' className="btn btn-outline-primary mr-2">signin</NavLink></NavItem>
             <NavItem><NavLink to='/signup' className="btn btn-outline-primary  ">signup</NavLink></NavItem>
         </div>
     )
