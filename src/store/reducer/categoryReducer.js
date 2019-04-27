@@ -1,12 +1,21 @@
-import { GET_CATEGORIES_BEGIN , GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE} from '../action/categoryAction'
+import { GET_CATEGORIES_BEGIN , GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE, SELECTED_CATEGORY} from '../action/categoryAction'
 
 const initialState = {
     items: [],
     loading: false,
-    error: null
+    error: null,
+    selectedCategory: null
 };
 
 const categoryReducer = (state = initialState, action)=>{
+
+    if (action.type === SELECTED_CATEGORY){
+        return {
+            ...state,
+            selectedCategory:action.categoryName
+        }
+    }
+
     switch (action.type) {
         case GET_CATEGORIES_BEGIN:
             return {

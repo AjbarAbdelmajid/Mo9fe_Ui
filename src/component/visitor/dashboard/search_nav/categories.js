@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {fetchCategories} from "../../../../store/action/categoryAction";
+import { storeSelectedCategory} from "../../../../store/action/categoryAction";
+import {getCategories} from "../../../../api_calls/category";
 import './index.css';
 import { Navbar, Form } from 'react-bootstrap';
 
 class CategoriesList extends Component {
 
     componentWillMount() {
-        this.props.fetchCategories();
+        this.props.getCategories();
     }
 
     render() {
         const {categoriesError, categoriesLoading, categories} = this.props;
 
-        if (categoriesLoading && categories.length === 0) {
+        if (categoriesLoading || categories.length === 0) {
 
             return (
                 <Navbar.Brand className="brandItems">
@@ -23,7 +24,7 @@ class CategoriesList extends Component {
                 </Navbar.Brand>
             )
         }
-        if (categoriesError) {
+        if (categoriesError || categories === undefined) {
             return (
                 <Navbar.Brand className="brandItems">
                     <Form.Control as="select" className="SearchItems">
@@ -39,7 +40,7 @@ class CategoriesList extends Component {
         else {
             return (
                 <Navbar.Brand className="brandItems">
-                    <Form.Control as="select" className="SearchItems">
+                    <Form.Control as="select" className="SearchItems" onChange={this.handelChange}>
                         <option hidden key='categories'>categories</option>
                         <option value=''> </option>
                         {categories.map(item => <option key={item.categories_id}>{item.categories_name}</option>)}
@@ -50,17 +51,23 @@ class CategoriesList extends Component {
             )
         }
     }
+    handelChange = (e)=>{
+        this.props.storeSelectedCategory(e.target.value);
+        setTimeout(()=>{console.log(this.props.selectedCategory)}, 1)
+}
 }
 
 const mapStateToProps = (state) => {
     return {
         categories: state.category.items,
         categoriesLoading: state.category.loading,
-        categoryError: state.category.error
+        categoryError: state.category.error,
+        selectedCategory: state.category.selectedCategory
     }
 };
 const mapDispatchToProps ={
-            fetchCategories: ()=> fetchCategories()
+            getCategories: ()=> getCategories(),
+            storeSelectedCategory: name => storeSelectedCategory(name)
 };
 
 

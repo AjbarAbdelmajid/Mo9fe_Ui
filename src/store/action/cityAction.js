@@ -1,44 +1,28 @@
-import axios from 'axios'
-import config from '../../config'
-
 export const GET_Cities_BEGIN = 'GET_Cities_BEGIN';
 export const GET_Cities_SUCCESS = 'GET_Cities_SUCCESS';
 export const GET_Cities_FAILURE = 'GET_Cities_FAILURE';
+export const SELECTED_CITY = 'SELECTED_CITY';
 
-// grab the data
-export const fetchCities =  ()=>{
-    return dispatch => {
-        dispatch(grabbingCitiesDataBegging());
-
-        //get data from api
-        return axios.get(`${config.baseUrl}sort/public/list/cities`)
-            .then(response=>{
-                if (response.statusText !== 'OK'){
-
-                    throw Error(response.status)
-                } else {
-                    dispatch(grabbingCitiesDataSuccess(response.data))
-                }
-        }).catch(err => {
-            dispatch(grabbingCitiesDataFail(err.message));
-            console.log(err);
-            })
-    }
-};
 
 // to inform us that the fetching is begging
-export const grabbingCitiesDataBegging =  ()=>({
+export const CitiesDataBegging =  ()=>({
     type: GET_Cities_BEGIN
 });
 
 // to store the grabbed data from api
-export const grabbingCitiesDataSuccess = cities =>({
+export const CitiesDataSuccess = cities =>({
     type: GET_Cities_SUCCESS,
     payload: {cities}
 });
 
 // in case if an error happened
-export const grabbingCitiesDataFail = error =>({
+export const CitiesDataFail = error =>({
     type: GET_Cities_FAILURE,
     payload: {error}
 });
+
+// storing the selected city
+export const selectCity = name =>({
+            type: SELECTED_CITY,
+            cityName: name
+    });
