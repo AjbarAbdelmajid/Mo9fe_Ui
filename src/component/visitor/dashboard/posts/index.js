@@ -1,52 +1,56 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Media } from 'react-bootstrap';
-import {Link} from 'react-router-dom'
 import './index.css';
+import AnnouncePost from './announcePost'
+import ProfilePost from './profilesPost'
+import {getUsersAccountImages} from "../../../../api_calls/users"
+import {connect}  from 'react-redux'
 import defaultImage from './defaultImage.jpg'
 
+
 class Post extends Component {
-    constructor(props){
-        super(props);
-         this.state = {
-            dummyData : {
-                title : 'the title',
-                description : 'the description of something that is soo stupid, or maybe not ho knows not me',
-                createdat: '12/34/2019'
-            }
-        }
+
+    componentWillMount(){
+        this.props.getUsersAccountImages();
     }
     render() {
         return (
-                <div className="card col-9  posts" >
-                    {this.postGenerator(this.state.dummyData, defaultImage)}
-                    {this.postGenerator(this.state.dummyData, defaultImage)}
-                    {this.postGenerator(this.state.dummyData, defaultImage)}
-                    {this.postGenerator(this.state.dummyData, defaultImage)}
-                    {this.postGenerator(this.state.dummyData, defaultImage)}
-                    {this.postGenerator(this.state.dummyData, defaultImage)}
-
-                </div>
-        )
-    }
-
-    postGenerator = (thePost, img)=>{
-        return (
-            <div className="card-content ">
-                <Media >
-                    <img src={img} alt="this will show if there is not showing "/>
-                    <Media.Body>
-                        <Link to={'/post/' }>
-                            <h3>{thePost.title}</h3>
-                        </Link>
-                        <p>{thePost.description}</p>
-                        <span className="createdDate">posted at : {thePost.createdat}</span>
-                    </Media.Body>
-
-                </Media>
+            <div className="card col-9  posts ">
+                <AnnouncePost postImage={this.postImage} shortTheDescription={this.shortTheDescription}/>
+                <ProfilePost postImage={this.postImage} shortTheDescription={this.shortTheDescription}/>
             </div>
         )
     }
+    postImage = (ownerId)=>{
+        if(ownerId === null){
+            return defaultImage
+        } else {
+            if (this.props.postImages.length !== 0){
 
+                let path = '';
+                this.props.postImages.forEach(img =>{
+                    if (img.user_id === ownerId){
+                        path = img.file_path;
+                    }
+                });
+                return path
+            } else {
+                return defaultImage
+            }
+        }
+    };
+    shortTheDescription = (description)=>{
+        return description.substring(0, 130) + '....';
+    };
 }
-export default Post
+
+const mapStateToProps = state =>{
+    return {
+        postImages: state.users.accountsImages
+    }
+};
+const mapDispatchToProps = {
+    getUsersAccountImages: () => getUsersAccountImages()
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post)
