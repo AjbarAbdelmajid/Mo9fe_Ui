@@ -4,6 +4,7 @@ import categoryReducer from './categoryReducer'
 import announceReducer from './announceReducer'
 import userReducer from './userReducer'
 import profileReducer from './profileReducer'
+import searchReducer from './SearchReducer'
 
 const indexReducer = combineReducers({
     city: cityReducer,
@@ -11,6 +12,7 @@ const indexReducer = combineReducers({
     announce: announceReducer,
     users: userReducer,
     profiles: profileReducer,
+    searchBy: searchReducer
 });
 
 export default indexReducer

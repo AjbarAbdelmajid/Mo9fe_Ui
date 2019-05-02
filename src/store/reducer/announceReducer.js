@@ -14,6 +14,7 @@ const announceReducer = (state = initialState, action)=>{
 
     switch (action.type) {
         case GET_ANNOUNCE_BEGIN:
+
             return {
                 ...state,
                 loading: true

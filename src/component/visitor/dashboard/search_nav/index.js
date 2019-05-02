@@ -4,34 +4,69 @@ import { Button, Navbar, Form } from 'react-bootstrap';
 import './index.css';
 import CitiesList from './cities'
 import CategoriesList from './categories'
+import {connect} from 'react-redux'
+import {SelectedService, SelectedCategory, SelectedCity} from "../../../../store/action/SearchAction"
 
 class Searching extends Component {
 
-        render() {
-            return (
-                <div className="container-fluid pt-5 ">
-                    <Navbar className="searchNav">
+    render() {
+        return (
+            <div className="container-fluid pt-5 ">
+                <Navbar className="searchNav">
 
-                        <CitiesList/>
-                        <CategoriesList/>
-                        <Navbar.Brand className="brandItems">
-                            <Form.Control as="select" className="SearchItems">
-                                <option hidden key='service'>type service</option>
-                                <option key='announce'>demand service</option>
-                                <option key='profile'>offer service</option>
-                            </Form.Control>
-                        </Navbar.Brand>
+                    <CitiesList  handleChange = {(e)=>{this.handleChange(e)}}/>
+                    <CategoriesList handleChange = {(e)=>{this.handleChange(e)}}/>
+                    <Navbar.Brand className="brandItems">
+                        <Form.Control as="select" name='service' className="SearchItems" onChange={(e)=>{this.handleChange(e)}}>
+                            <option hidden key='service' value={null}>type service</option>
+                            <option key='both'> </option>
+                            <option key='announce' value='announce' >les demandes service</option>
+                            <option key='profile' value='profile'>les offers service</option>
+                        </Form.Control>
+                    </Navbar.Brand>
+                    <Navbar.Brand className="brandItems">
+                        <Button variant="outline-info" onClick={()=>{this.handleClick()}} className="SearchBtn" type="submit">Submit</Button>
+                    </Navbar.Brand>
 
-                        <Navbar.Brand className="brandItems">
-                            <Button variant="outline-info" className="SearchBtn" type="submit">Submit</Button>
-                        </Navbar.Brand>
+                </Navbar>
+            </div>
+        )
+    }
 
-                    </Navbar>
-                </div>
-            )
+    holder = {service: null,category: null, city: null};
+
+    handleChange = (e) =>{
+        const {name, value} = e.target;
+
+        // if name is service, store the value
+        if(name==='service'){(this.holder[name] = value)}
+
+        // if name is city or category store the id
+        else {
+            //  get the id from the html attribute
+            let getId = Array.from(e.target.children).map(
+                opt =>  opt.value === e.target.value ? opt.getAttribute('id'): null
+            );
+            // git the id from the returned array
+            this.holder[name] = getId.filter(element => element!== null)[0];
+
+            // in case of no id is found in filter, return null instead of undefined
+            if (this.holder[name] === undefined){this.holder[name] = null}
         }
 
+    };
+
+    handleClick = () => {
+        this.props.selectedService(this.holder.service);
+        this.props.selectedCategory(this.holder.category);
+        this.props.selectedCity(this.holder.city);
+    }
 }
 
+const mapDispatchToProps = {
+    selectedService: service => SelectedService(service),
+    selectedCategory : category => SelectedCategory(category),
+    selectedCity: city => SelectedCity(city),
+};
 
-export default Searching;
+export default connect(null,mapDispatchToProps)(Searching);

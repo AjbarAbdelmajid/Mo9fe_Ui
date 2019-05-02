@@ -3,23 +3,39 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import AnnouncePost from './announcePost'
 import ProfilePost from './profilesPost'
-import {getUsersAccountImages} from "../../../../api_calls/users"
+import {getUsersAccountImages} from "../../../../api_calls"
 import {connect}  from 'react-redux'
 import defaultImage from './defaultImage.jpg'
 
 
 class Post extends Component {
 
-    componentWillMount(){
+    componentDidMount(){
         this.props.getUsersAccountImages();
     }
     render() {
-        return (
-            <div className="card col-9  posts ">
-                <AnnouncePost postImage={this.postImage} shortTheDescription={this.shortTheDescription}/>
-                <ProfilePost postImage={this.postImage} shortTheDescription={this.shortTheDescription}/>
-            </div>
-        )
+        if (this.props.serviceType === 'announce'){
+            return (
+                <div className="card col-9  posts ">
+                    <AnnouncePost postImage={this.postImage} shortTheDescription={this.shortTheDescription}/>
+                </div>
+            )
+        }
+        else if (this.props.serviceType === 'profile'){
+            return (
+                <div className="card col-9  posts ">
+                    <ProfilePost postImage={this.postImage} shortTheDescription={this.shortTheDescription}/>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div className="card col-9  posts ">
+                    <AnnouncePost postImage={this.postImage} shortTheDescription={this.shortTheDescription}/>
+                    <ProfilePost postImage={this.postImage} shortTheDescription={this.shortTheDescription}/>
+                </div>
+            )
+        }
     }
     postImage = (ownerId)=>{
         if(ownerId === null){
@@ -46,7 +62,8 @@ class Post extends Component {
 
 const mapStateToProps = state =>{
     return {
-        postImages: state.users.accountsImages
+        postImages: state.users.accountsImages,
+        serviceType: state.searchBy.serviceType
     }
 };
 const mapDispatchToProps = {

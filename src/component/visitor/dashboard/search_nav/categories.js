@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import { storeSelectedCategory} from "../../../../store/action/categoryAction";
-import {getCategories} from "../../../../api_calls/category";
+import {getCategories} from "../../../../api_calls";
 import './index.css';
 import { Navbar, Form } from 'react-bootstrap';
 
@@ -40,10 +40,10 @@ class CategoriesList extends Component {
         else {
             return (
                 <Navbar.Brand className="brandItems">
-                    <Form.Control as="select" className="SearchItems" onChange={this.handelChange}>
-                        <option hidden key='categories'>categories</option>
-                        <option value=''> </option>
-                        {categories.map(item => <option key={item.categories_id}>{item.categories_name}</option>)}
+                    <Form.Control as="select" className="SearchItems" name='category'  onChange={this.props.handleChange}>
+                        <option hidden key='categories' value={null} id={null}>categories</option>
+                        <option value={null}> </option>
+                        {categories.map(item => <option key={item.categories_id} id={item.categories_id} >{item.categories_name}</option>)}
 
                     </Form.Control>
 
@@ -51,10 +51,6 @@ class CategoriesList extends Component {
             )
         }
     }
-    handelChange = (e)=>{
-        this.props.storeSelectedCategory(e.target.value);
-        setTimeout(()=>{console.log(this.props.selectedCategory)}, 1)
-}
 }
 
 const mapStateToProps = (state) => {

@@ -4,10 +4,10 @@ import { Media } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import './index.css'
 import {connect}  from 'react-redux'
-import {getAnnounces} from "../../../../api_calls/announce"
+import {getAnnounces} from "../../../../api_calls"
 
 class AnnouncePost extends Component {
-    componentWillMount(){
+    componentDidMount(){
         this.props.getAnnounces();
     }
 
@@ -15,7 +15,7 @@ class AnnouncePost extends Component {
         const {error, loading, announces} = this.props;
         if (loading || announces.length === 0 ){
             return (
-                <div style={{display: 'flex', justifyContent: 'center'}}>Loading...</div>
+                <div style={{display: 'flex', justifyContent: 'center'}}>no announces...</div>
             )
         }
         if (error || announces === undefined){
@@ -52,13 +52,39 @@ class AnnouncePost extends Component {
 }
 
 const mapStateToProps = state =>{
-    return {
-        announces: state.announce.announces,
-        loading: state.announce.loading,
-        error: state.announce.error,
-        postImages: state.users.accountsImages
+    if(state.searchBy.categoryName === null && state.searchBy.cityName === null ){
+        return {
+            announces: state.announce.announces,
+            loading: state.announce.loading,
+            error: state.announce.error,
+        }
+    }
+    else {
+        if(state.searchBy.categoryName !== null && state.searchBy.cityName !== null){
+            return {
+                announces: state.announce.announces.filter(announce => announce.categories_id === state.searchBy.categoryName && announce.code_postal === parseInt(state.searchBy.cityName)),
+                loading: state.announce.loading,
+                error: state.announce.error,
+            }
+        }
+        else if(state.searchBy.cityName !== null){
+
+            return {
+                announces: state.announce.announces.filter(announce => announce.code_postal === parseInt(state.searchBy.cityName)),
+                loading: state.announce.loading,
+                error: state.announce.error,
+            }
+        }
+        else{
+            return {
+                announces: state.announce.announces.filter(announce => announce.categories_id === state.searchBy.categoryName),
+                loading: state.announce.loading,
+                error: state.announce.error,
+            }
+        }
     }
 };
+
 const mapDispatchToProps = {
     getAnnounces: () => getAnnounces(),
 };

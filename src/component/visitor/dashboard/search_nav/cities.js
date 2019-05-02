@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {selectCity} from "../../../../store/action/cityAction"
-import {getCities} from '../../../../api_calls/city'
+import {getCities} from '../../../../api_calls'
 import './index.css';
 import { Navbar, Form } from 'react-bootstrap';
 
@@ -34,10 +34,10 @@ class CitiesList extends Component {
         }
         return (
             <Navbar.Brand className="brandItems" >
-                <Form.Control as="select" className="SearchItems" onChange={this.handleChange}>
-                    <option hidden key='cities' >cities</option>
+                <Form.Control as="select" className="SearchItems" name="city" onChange={this.props.handleChange}>
+                    <option hidden key='cities' value={null} >cities</option>
                     <option value={null}> </option>
-                    {cities.map(item => {return( <option key={item.code_postal}>{item.city_name}</option>)})}
+                    {cities.map(item => {return( <option key={item.code_postal} id={item.code_postal}>{item.city_name}</option>)})}
 
                 </Form.Control>
 

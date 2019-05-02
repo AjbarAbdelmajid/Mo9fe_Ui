@@ -1,6 +1,7 @@
 .Footer{
 
     margin-top: 10px;
+    position: fixed;
     z-index: 9999 !important;
     left: 0;
     bottom: 0;
