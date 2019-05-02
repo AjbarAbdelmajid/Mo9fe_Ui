@@ -3,10 +3,9 @@ import config from '../config'
 import {
     ProfileDataFail,
     ProfileDataBegging,
-    ProfileDataSuccess
+    ProfileDataSuccess,
 } from "../store/action/profileAction";
 
-// get the announces data
 export function getProfiles (){
     return dispatch => {
         dispatch(ProfileDataBegging());
