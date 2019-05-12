@@ -1,19 +1,28 @@
-import {ACCOUNTS_IMAGES} from "../action/userAction";
+import {USERS_DATA, GET_USERS_DATA_BEGIN} from "../action/userAction";
 
 
 const initialState = {
-    accountsImages: []
+    usersInfo: [],
+    loadingUsers: false,
 };
 
- const userReducer = (state = initialState, action)=>{
+const userReducer = (state = initialState, action)=>{
 
-     switch (action.type){
-         case ACCOUNTS_IMAGES:
-             return {
-                 ...state,
-                 accountsImages: action.imagesPayload
-             };
-         default: {return state}
+    switch (action.type){
+        case USERS_DATA:
+            return {
+                ...state,
+                usersInfo: action.usersPayload,
+                loadingUsers: false,
+            };
+        case GET_USERS_DATA_BEGIN:
+            return {
+                ...state,
+                loadingUsers: true,
+            };
+        default: {
+            return state
+        }
      }
 };
 

@@ -5,6 +5,7 @@ import announceReducer from './announceReducer'
 import userReducer from './userReducer'
 import profileReducer from './profileReducer'
 import searchReducer from './SearchReducer'
+import imagesReducer from './uploadImagesReducer'
 
 const indexReducer = combineReducers({
     city: cityReducer,
@@ -12,7 +13,8 @@ const indexReducer = combineReducers({
     announce: announceReducer,
     users: userReducer,
     profiles: profileReducer,
-    searchBy: searchReducer
+    searchBy: searchReducer,
+    allImages: imagesReducer,
 });
 
 export default indexReducer

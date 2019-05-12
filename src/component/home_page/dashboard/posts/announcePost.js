@@ -20,11 +20,10 @@ class AnnouncePost extends Component {
         }
         if (error || announces === undefined){
             return(
-
                 <div style={{display: 'flex', justifyContent: 'center'}}>network error</div>
-
             )
-        } else {
+        }
+        else {
             return (
                 <div >
                     {
@@ -32,9 +31,9 @@ class AnnouncePost extends Component {
                             return (
                                 <div className="card-content " key={announce.announce_id}>
                                     <Media >
-                                        <img src={this.props.postImage(announce.user_id)} alt="this will show if there is not showing "/>
+                                        <img src={this.props.postImage(announce.user_id)} className="postListImage" alt="this will show if there is not showing "/>
                                         <Media.Body>
-                                            <Link to={'/post/' }>
+                                            <Link to={'/post/anno/'+announce.announce_id }>
                                                 <h3>{announce.announce_title}</h3>
                                             </Link>
                                             <p>{this.props.shortTheDescription(announce.announce_description)}</p>
@@ -52,36 +51,26 @@ class AnnouncePost extends Component {
 }
 
 const mapStateToProps = state =>{
+
+    let announceCondition = {};
     if(state.searchBy.categoryName === null && state.searchBy.cityName === null ){
-        return {
-            announces: state.announce.announces,
-            loading: state.announce.loading,
-            error: state.announce.error,
-        }
+        announceCondition.value = state.announce.announces;
     }
     else {
         if(state.searchBy.categoryName !== null && state.searchBy.cityName !== null){
-            return {
-                announces: state.announce.announces.filter(announce => announce.categories_id === state.searchBy.categoryName && announce.code_postal === parseInt(state.searchBy.cityName)),
-                loading: state.announce.loading,
-                error: state.announce.error,
-            }
+            announceCondition.value = state.announce.announces.filter(announce => announce.categories_id === state.searchBy.categoryName && announce.code_postal === parseInt(state.searchBy.cityName))
         }
         else if(state.searchBy.cityName !== null){
-
-            return {
-                announces: state.announce.announces.filter(announce => announce.code_postal === parseInt(state.searchBy.cityName)),
-                loading: state.announce.loading,
-                error: state.announce.error,
-            }
+            announceCondition.value = state.announce.announces.filter(announce => announce.code_postal === parseInt(state.searchBy.cityName))
         }
         else{
-            return {
-                announces: state.announce.announces.filter(announce => announce.categories_id === state.searchBy.categoryName),
-                loading: state.announce.loading,
-                error: state.announce.error,
-            }
+            announceCondition.value = state.announce.announces.filter(announce => announce.categories_id === state.searchBy.categoryName)
         }
+    }
+    return {
+        announces:announceCondition.value,
+        loading: state.announce.loading,
+        error: state.announce.error,
     }
 };
 

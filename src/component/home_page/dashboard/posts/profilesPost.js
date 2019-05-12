@@ -30,14 +30,13 @@ class ProfilesPost extends Component {
                             return (
                                 <div className="card-content " key={profile.id_Profile}>
                                     <Media >
-                                        <img src={this.props.postImage(profile.User_id)} alt="this will show if there is not showing "/>
+                                        <img src={this.props.postImage(profile.User_id)} className="postListImage" alt="this will show if there is not showing "/>
                                         <Media.Body>
-                                            <Link to={'/post/' }>
+                                            <Link to={'/post/pro/'+profile.id_Profile }>
                                                 <h3>{profile.profile_title}</h3>
                                             </Link>
                                             <p>{this.props.shortTheDescription(profile.profile_description)}</p>
                                             <span className="createdDate">posted at : {profile.createdAt}</span>
-                                            {console.log(typeof profile.createdAt)}
                                         </Media.Body>
                                     </Media>
                                 </div>
@@ -51,37 +50,27 @@ class ProfilesPost extends Component {
 }
 
 const mapStateToProps = state =>{
+
+    let profileCondition = {};
     if(state.searchBy.categoryName === null && state.searchBy.cityName === null ){
-        return {
-            profiles: state.profiles.profiles,
-            loadingProfiles: state.profiles.loadingProfiles,
-            profileError: state.profiles.profileError,
-        }
-    } else {
-        if (state.searchBy.cityName !== null && state.searchBy.categoryName !== null){
-            return {
-                profiles: state.profiles.profiles.filter(profile => profile.code_postal === parseInt(state.searchBy.cityName) && profile.categories_id === state.searchBy.categoryName),
-                loadingProfiles: state.profiles.loadingProfiles,
-                profileError: state.profiles.profileError,
-            }
+        profileCondition.value = state.profiles.profiles;
+    }
+    else {
+        if(state.searchBy.categoryName !== null && state.searchBy.cityName !== null){
+            profileCondition.value = state.profiles.profiles.filter(profile => profile.code_postal === parseInt(state.searchBy.cityName) && profile.categories_id === state.searchBy.categoryName)
         }
         else if(state.searchBy.cityName !== null){
-            return {
-                profiles: state.profiles.profiles.filter(profile => profile.code_postal === parseInt(state.searchBy.cityName)),
-                loadingProfiles: state.profiles.loadingProfiles,
-                profileError: state.profiles.profileError,
-            }
+            profileCondition.value = state.profiles.profiles.filter(profile => profile.code_postal === parseInt(state.searchBy.cityName))
         }
-        else {
-            return {
-                profiles: state.profiles.profiles.filter(profile => profile.categories_id === state.searchBy.categoryName),
-                loadingProfiles: state.profiles.loadingProfiles,
-                profileError: state.profiles.profileError,
-            }
+        else{
+            profileCondition.value = state.profiles.profiles.filter(profile => profile.categories_id === state.searchBy.categoryName)
         }
-
     }
-
+    return {
+        profiles: profileCondition.value,
+        loadingProfiles: state.profiles.loadingProfiles,
+        profileError: state.profiles.profileError,
+    }
 };
 const mapDispatchToProps = {
     getProfile: () => getProfiles(),
