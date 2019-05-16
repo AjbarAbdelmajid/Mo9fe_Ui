@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from '../config'
-import {UsersData, GetUsersDataBegging} from "../store/action/userAction";
+import {UsersData, GetUsersDataBegging, LoginBegging, LoginFailed, LoginSuccess} from "../store/action/userAction";
 
 //get users account data
 export function getUsers (){
@@ -12,15 +12,16 @@ export function getUsers (){
         // get the admin token
         axios.patch(`${config.baseUrl}signin`, {user_name: 'admin', password: 'password1'})
             .then(response=>{
-
                 if (response.data.success ){
                     return holder.token = response.data.token
                 } else {return holder.token = false}
             })
              .then(()=>{
+
                  // get users list
                  return axios.get(`${config.baseUrl}users/list`, {headers: {Authorization: holder.token}})
                      .then(res => {
+
                          // filter the image path
                          holder.data = res.data;
                          holder.data.filter(element => {
@@ -40,4 +41,37 @@ export function getUsers (){
             });
 
     }
+}
+
+export function login(username, password) {
+    return dispatch => {
+
+        dispatch(LoginBegging());
+
+        return axios.patch(`${config.baseUrl}signin`, {user_name: username, password: password})
+            .then(user=>{
+                if (user.data.success ){
+
+                    // note => to get the token you need to parse the user local storage first
+                    localStorage.setItem('user',JSON.stringify(user.data));
+                    dispatch(LoginSuccess(user.data.data));
+                } else {
+
+                    // if the credentials are wrong
+                    localStorage.removeItem('user');
+                    dispatch(LoginFailed(user.data.msg || 'username or password is wrong'))
+                }
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    }
+}
+
+export function logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('user');
+    window.location.href = 'http://localhost:3000/';
 }
