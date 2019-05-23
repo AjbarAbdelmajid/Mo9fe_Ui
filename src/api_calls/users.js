@@ -75,3 +75,30 @@ export function logout() {
     localStorage.removeItem('user');
     window.location.href = 'http://localhost:3000/';
 }
+
+export function signup(data) {
+    return dispatch => {
+
+        dispatch(LoginBegging());
+
+        return axios.post(`${config.baseUrl}signup`, data, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
+            .then(user=>{
+                if (user.data.success ){
+
+                    // note => to get the token you need to parse the user local storage first
+                    localStorage.setItem('user',JSON.stringify(user.data));
+                    dispatch(LoginSuccess(user.data.data));
+                } else {
+
+                    // if the credentials are wrong
+                    localStorage.removeItem('user');
+                    dispatch(LoginFailed(user.data.msg || 'username or password wrong'))
+                }
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    }
+}
