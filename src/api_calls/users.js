@@ -1,6 +1,14 @@
 import axios from 'axios'
 import config from '../config'
-import {UsersData, GetUsersDataBegging, LoginBegging, LoginFailed, LoginSuccess} from "../store/action/userAction";
+import {
+    UsersData,
+    GetUsersDataBegging,
+    LoginBegging,
+    LoginFailed,
+    LoginSuccess,
+    DeleteAccountSuccess,
+    DeleteAccountFailed,
+} from "../store/action/userAction";
 
 //get users account data
 export function getUsers (){
@@ -93,6 +101,33 @@ export function signup(data) {
                     // if the credentials are wrong
                     localStorage.removeItem('user');
                     dispatch(LoginFailed(user.data.msg || 'username or password wrong'))
+                }
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    }
+}
+
+export function deleteLoggedAccount(password) {
+
+    // extract the token
+    const token = JSON.parse(localStorage.getItem('user')).token;
+
+    return dispatch => {
+
+        dispatch(LoginBegging());
+        console.log('the token : ',token);
+        return axios.delete(`${config.baseUrl}users/delete/me/${password}`,{headers:{'Authorization':token}})
+            .then(user=>{
+                if (user.data.success ){
+                    console.log(user.data);
+                    dispatch(DeleteAccountSuccess());
+                } else {
+                    console.log(user.data);
+                    dispatch(DeleteAccountFailed(user.data.msg))
                 }
 
             })

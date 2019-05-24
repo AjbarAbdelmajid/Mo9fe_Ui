@@ -6,3 +6,19 @@
     margin-bottom: 60px;
 
 }
+
+@media all and (max-width: 698px) {
+
+    .items {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.navBtn {
+    border: none;
+    outline: none;
+    margin-top: 10px;
+    text-decoration:none;
+    background-color: transparent;
+}

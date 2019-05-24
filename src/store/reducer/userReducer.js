@@ -1,4 +1,12 @@
-import {USERS_DATA, GET_USERS_DATA_BEGIN, LOGIN_BEGGING, LOGIN_FAILED, LOGIN_SUCCESS} from "../action/userAction";
+import {
+    USERS_DATA,
+    GET_USERS_DATA_BEGIN,
+    LOGIN_BEGGING,
+    LOGIN_FAILED,
+    LOGIN_SUCCESS,
+    DELETE_ACCOUNT_SUCCESS,
+    DELETE_ACCOUNT_FAILED
+} from "../action/userAction";
 
 let userIsLogged = JSON.parse(localStorage.getItem('user'));
 const initialState = {
@@ -7,6 +15,8 @@ const initialState = {
     loginLoading: false,
     LoginError: null,
     loggedUser: userIsLogged ? userIsLogged.data : null,
+    deleteMe: false,
+    deleteMeError: null
 };
 
 const userReducer = (state = initialState, action)=>{
@@ -40,6 +50,17 @@ const userReducer = (state = initialState, action)=>{
                 loginLoading: false,
                 loggedUser: null,
                 loginError: action.loginError
+            };
+        case DELETE_ACCOUNT_SUCCESS:
+            return{
+                ...state,
+                deleteMe: action.deleteMeSuccess
+            };
+        case DELETE_ACCOUNT_FAILED:
+            return{
+                ...state,
+                deleteMe: false,
+                deleteMeError: action.deleteMeFailMsg
             };
         default: {
             return state

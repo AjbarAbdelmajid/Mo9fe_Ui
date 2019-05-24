@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { NavItem } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -7,8 +7,8 @@ const Logoutlink = () => {
 
     return(
         <div className=" form-check-inline " >
-            <NavItem inverse="true" fluid ="true"><NavLink to='/signin' className="btn btn-outline-primary mr-2">signin</NavLink></NavItem>
-            <NavItem><NavLink to='/signup' className="btn btn-outline-primary  ">signup</NavLink></NavItem>
+            <NavItem inverse="true" fluid ="true"><Link to='/signin' className="btn btn-outline-info mr-2 navBtn "><b>signin</b></Link></NavItem>
+            <NavItem><Link to='/signup' className="btn btn-outline-info navBtn "><b>signup</b></Link></NavItem>
         </div>
     )
 };
