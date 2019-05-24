@@ -28,9 +28,9 @@ class SignupPage extends React.Component {
         this.setState({submitted: true});
 
         // break if the user or password is null
-        if (!(username && password) || username.length<7 || password.length<7 || !repeatPassword || (password !== repeatPassword) || !!username.match(/\d/g) || !!username.match(/\s/g) || username.match(/[|\\/~^:,;?!&%$@*+]/) ||  picture.size >1024 * 1024 * 2) {return;}
+        if (!(username && password) || username.length<7 || password.length<7 || !repeatPassword || (password !== repeatPassword) || !!username.match(/\d/g) || !!username.match(/\s/g) || username.match(/[|\\/~^:,;?!&%$@*+]/) ) {return;}
         if (picture &&  !(new RegExp('gif').test(picture.name.toLowerCase()) || new RegExp('png').test(picture.name.toLowerCase()) || new RegExp('jpeg').test(picture.name.toLowerCase()) || new RegExp('jpg').test(picture.name.toLowerCase()))) {return;}
-        console.log(picture);
+        if (picture !== null){if (picture.size >1024 * 1024 * 2){return;}}
 
         // gather the data as a single form data then send the request
         const formData = new FormData();
