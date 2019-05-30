@@ -1,10 +1,19 @@
-.Footer{
 
-    margin-top: 10px;
+.theSpace {
+    display: block;
+    padding: 20px;
+    height: 60px;
+    width: 100%;
+}
+
+.theFooter {
+    background-color: #F8F8F8;
+    border-top: 1px solid #E7E7E7;
+    text-align: center;
+    padding: 20px;
     position: fixed;
-    z-index: 9999 !important;
     left: 0;
     bottom: 0;
-    width: 100%;
-    background-color: ghostwhite;
+    height: 60px;
+    width: 100%
 }
