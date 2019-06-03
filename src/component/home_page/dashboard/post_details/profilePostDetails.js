@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import {Form, Carousel} from 'react-bootstrap'
+import {withRouter} from 'react-router-dom'
 import bagIcon from './bag_icon.png'
 import locationIcon from './location_icon.png'
 import {connect} from 'react-redux'
@@ -77,4 +78,4 @@ const mapDispatchToProps = {
     getAllImages: ()=> getAllImages()
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfilePostDetail)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfilePostDetail))
