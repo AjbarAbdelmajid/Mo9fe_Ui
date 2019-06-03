@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Navbar, Form } from 'react-bootstrap';
+import { Navbar, Form } from 'react-bootstrap';
 import './index.css';
 import CitiesList from './cities'
 import CategoriesList from './categories'
@@ -14,8 +14,14 @@ class Searching extends Component {
             <div className="container-fluid pt-5 ">
                 <Navbar className="searchNav">
 
+                    <Navbar.Brand className="brandItems" >
                     <CitiesList  handleChange = {(e)=>{this.handleChange(e)}}/>
+                    </Navbar.Brand>
+
+                    <Navbar.Brand className="brandItems">
                     <CategoriesList handleChange = {(e)=>{this.handleChange(e)}}/>
+                    </Navbar.Brand>
+
                     <Navbar.Brand className="brandItems">
                         <Form.Control as="select" name='service' className="SearchItems" onChange={(e)=>{this.handleChange(e)}}>
                             <option hidden key='service' value={null}>type service</option>
@@ -23,9 +29,6 @@ class Searching extends Component {
                             <option key='announce' value='announce' >les demandes service</option>
                             <option key='profile' value='profile'>les offers service</option>
                         </Form.Control>
-                    </Navbar.Brand>
-                    <Navbar.Brand className="brandItems">
-                        <Button variant="outline-info" onClick={()=>{this.handleClick()}} className="SearchBtn" type="submit">Submit</Button>
                     </Navbar.Brand>
 
                 </Navbar>
@@ -39,7 +42,10 @@ class Searching extends Component {
         const {name, value} = e.target;
 
         // if name is service, store the value
-        if(name==='service'){(this.holder[name] = value)}
+        if(name==='service'){
+            (this.holder[name] = value);
+            this.props.selectedService(this.holder.service);
+        }
 
         // if name is city or category store the id
         else {
@@ -52,15 +58,12 @@ class Searching extends Component {
 
             // in case of no id is found in filter, return null instead of undefined
             if (this.holder[name] === undefined){this.holder[name] = null}
+            name === 'category' ? this.props.selectedCategory(this.holder.category)
+                                : this.props.selectedCity(this.holder.city);
         }
 
     };
 
-    handleClick = () => {
-        this.props.selectedService(this.holder.service);
-        this.props.selectedCategory(this.holder.category);
-        this.props.selectedCity(this.holder.city);
-    }
 }
 
 const mapDispatchToProps = {

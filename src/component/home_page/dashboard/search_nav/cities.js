@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {selectCity} from "../../../../store/action/cityAction"
 import {getCities} from '../../../../api_calls'
 import './index.css';
-import { Navbar, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 class CitiesList extends Component {
 
@@ -16,24 +16,19 @@ class CitiesList extends Component {
 
         if (loading || cities.length === 0 ){
             return (
-                <Navbar.Brand className="brandItems">
                     <Form.Control as="select" className="SearchItems">
                         <option hidden key='cities'>Loading...</option>
                     </Form.Control>
-                </Navbar.Brand>
             )
         }
         if (error || cities === undefined){
             return(
-                <Navbar.Brand className="brandItems">
                     <Form.Control as="select" className="SearchItems">
                         <option hidden key='cities'>network error</option>
                     </Form.Control>
-                </Navbar.Brand>
             )
         }
         return (
-            <Navbar.Brand className="brandItems" >
                 <Form.Control as="select" className="SearchItems" name="city" onChange={this.props.handleChange}>
                     <option hidden key='cities' value={null} >cities</option>
                     <option value={null}> </option>
@@ -41,7 +36,6 @@ class CitiesList extends Component {
 
                 </Form.Control>
 
-            </Navbar.Brand>
         )
     }
 

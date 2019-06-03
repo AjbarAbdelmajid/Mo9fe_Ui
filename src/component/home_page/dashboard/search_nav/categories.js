@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { storeSelectedCategory} from "../../../../store/action/categoryAction";
 import {getCategories} from "../../../../api_calls";
 import './index.css';
-import { Navbar, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 class CategoriesList extends Component {
 
@@ -17,16 +17,13 @@ class CategoriesList extends Component {
         if (categoriesLoading || categories.length === 0) {
 
             return (
-                <Navbar.Brand className="brandItems">
                     <Form.Control as="select" className="SearchItems">
                         <option hidden key='categories'>Loading...</option>
                     </Form.Control>
-                </Navbar.Brand>
             )
         }
         if (categoriesError || categories === undefined) {
             return (
-                <Navbar.Brand className="brandItems">
                     <Form.Control as="select" className="SearchItems">
                         <option hidden key='categories'>network error</option>
                         {setTimeout(() => {
@@ -34,20 +31,16 @@ class CategoriesList extends Component {
                         }, 1000)}
                     </Form.Control>
 
-                </Navbar.Brand>
             )
         }
         else {
             return (
-                <Navbar.Brand className="brandItems">
                     <Form.Control as="select" className="SearchItems" name='category'  onChange={this.props.handleChange}>
                         <option hidden key='categories' value={null} id={null}>categories</option>
                         <option value={null}> </option>
                         {categories.map(item => <option key={item.categories_id} id={item.categories_id} >{item.categories_name}</option>)}
-
                     </Form.Control>
 
-                </Navbar.Brand>
             )
         }
     }
