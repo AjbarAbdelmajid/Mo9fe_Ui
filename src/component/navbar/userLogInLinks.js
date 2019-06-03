@@ -3,7 +3,8 @@ import { Link, Redirect} from 'react-router-dom';
 import { Dropdown, NavDropdown } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {logout} from "../../api_calls/users";
-import DeleteAccount from '../user/account/deleteAccount'
+import DeleteAccount from '../user/account/deleteAccount';
+//import CreateAnnounce from '../user/announce/test'
 
 const userSignInLink = () => {
 
@@ -11,16 +12,16 @@ const userSignInLink = () => {
         <div className=" form-check-inline items" >
 
 
-            <Link to='..' style={{ textDecoration: 'none' }} className="navBtn mr-1 ml-5  bg-light" > <b>offer de service</b></Link>
+            <Link to='..' style={{ textDecoration: 'none' }} className="navBtn mr-1 ml-5 bg-light" > <b>offer de service</b></Link>
 
-            <NavDropdown className="navBtn mr-1 ml-5  bg-light " title={<b>mais demandes</b>} >
-                    <Dropdown.Item style={{ textDecoration: 'none' }} className="btn navBtn text-info" >
-                        <b>creer une demande</b>
-                    </Dropdown.Item>
+            <NavDropdown className="navBtn mr-1 ml-5 bg-light" title={<b>mais demandes</b>} >
+                <Link  className="btn btn-outline-light navBtn text-primary" to="/test" >
+                    <b>créer une demande</b>
+                </Link>
 
-                    <Dropdown.Item style={{ textDecoration: 'none' }} className="btn navBtn text-info" >
-                        <b>mais demandes</b>
-                    </Dropdown.Item>
+                <Link  className="btn navBtn  btn-outline-light text-primary" to="/test" >
+                    <b>lister mais demandes</b>
+                </Link>
             </NavDropdown>
 
             <NavDropdown className="navBtn mr-5 ml-5  bg-light " title={<b>account</b>} >
@@ -29,7 +30,7 @@ const userSignInLink = () => {
                      <b>update account</b>
                 </Dropdown.Item>
 
-                <Dropdown.Item style={{ textDecoration: 'none' }} className="btn navBtn text-info" onClick={()=> <DeleteAccount/>} >
+                <Dropdown.Item style={{ textDecoration: 'none' }} className="btn navBtn text-info"  >
                     <DeleteAccount/>
                 </Dropdown.Item>
 

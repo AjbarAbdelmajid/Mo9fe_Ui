@@ -7,6 +7,7 @@ import AnnouncePostDetails from './home_page/dashboard/post_details/announcePost
 import profilePostDetails from './home_page/dashboard/post_details/profilePostDetails'
 import LoginPage from './home_page/auth/signIn'
 import SignupPage from './home_page/auth/signUp'
+import CreateAnnounce from './user/announce/createAnnounce'
 
 const Components = () => {
     return(
@@ -18,6 +19,7 @@ const Components = () => {
             <Route path="/post/pro/:id" exact key="3" component={()=><profilePostDetails/>}/>
             <Route path="/signin" exact key="4" component={()=><LoginPage/>}/>
             <Route path="/signup" exact key="5" component={()=><SignupPage/>}/>
+            <Route path="/test" exact key="6" component={()=><CreateAnnounce/>}/>
             <Footer/>
         </div>
         </BrowserRouter>

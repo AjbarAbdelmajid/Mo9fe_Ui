@@ -1,0 +1,26 @@
+.space{
+    position: inherit;
+    top: 80px;
+    height: 10vh;
+}
+
+@media all and (min-width: 480px) {
+    .createForm {
+        padding: 60px 0;
+    }
+
+    .mean createForm {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+}
+.mean{
+    padding-left: 30%;
+    padding-right: 40%;
+    position: inherit;
+    height: 100vh;
+    background-color: white;
+}
+.btnForPost {
+    margin-bottom: 20px;
+}

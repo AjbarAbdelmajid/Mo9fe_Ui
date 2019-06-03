@@ -11,7 +11,7 @@ import homePageIcon from './home_page_icon.png'
 class NavBar extends React.Component {
     render(){
         return(
-            <div className="TheNav">
+            <div id="TheNav">
                 <Navbar className=" navbar navbar-light bg-light">
                     <Link to='/' className=" btn-outline-primary mr-auto"><img src={homePageIcon} width='50px' height='50px' alt="home page"/></Link>
                     {this.props.loggedIn !== null ? (<div><UserLogInLinks/><Redirect push to="/"/></div>): <Logoutlinks/>}

@@ -2,12 +2,18 @@ import {
     GET_ANNOUNCE_SUCCESS,
     GET_ANNOUNCE_BEGIN,
     GET_ANNOUNCE_FAILURE,
+    CREATE_ANNOUNCE_BEGIN,
+    CREATE_ANNOUNCE_FAILURE,
+    CREATE_ANNOUNCE_SUCCESS,
 } from "../action/announceAction";
 
 const initialState = {
     announces: [],
     loading: false,
     error: null,
+    createAnnounceError: null,
+    announceIsCreated: false,
+    creationBegging: false,
 };
 
 const announceReducer = (state = initialState, action)=>{
@@ -31,6 +37,25 @@ const announceReducer = (state = initialState, action)=>{
                 loading: false,
                 error: action.payloadError,
                 announces: []
+            };
+        case CREATE_ANNOUNCE_BEGIN:
+            return {
+                ...state,
+                creationBegging: true,
+            };
+        case CREATE_ANNOUNCE_SUCCESS:
+            return {
+                ...state,
+                announceIsCreated: true,
+                creationBegging: false,
+                createAnnounceError: null
+            };
+        case CREATE_ANNOUNCE_FAILURE:
+            return {
+                ...state,
+                createAnnounceError: action.creationFailed,
+                creationBegging: false,
+                announceIsCreated: false
             };
         default:
             return state;

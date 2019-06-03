@@ -3,7 +3,10 @@ import config from '../config'
 import {
     AnnounceDataFail,
     AnnounceDataBegging,
-    AnnounceDataSuccess
+    AnnounceDataSuccess,
+    CreateAnnounceDataBegging,
+    CreateAnnounceDataFail,
+    CreateAnnounceDataSuccess
 } from "../store/action/announceAction";
 
 // get the announces data
@@ -24,5 +27,30 @@ export function getAnnounces (){
                 dispatch(AnnounceDataFail(err.message));
                 console.log(err);
             })
+    }
+}
+
+export function createAnnounce(data){
+
+    // extract the token
+    const token = JSON.parse(localStorage.getItem('user')).token;
+    return dispatch => {
+        dispatch(CreateAnnounceDataBegging());
+
+        // send data to the api
+        return axios.post(`${config.baseUrl}announce/create`, data, {headers: {'Content-Type': 'form-data', 'Authorization':token}} )
+            .then(announce=>{
+                if (announce.data.success ){
+
+                    dispatch(CreateAnnounceDataSuccess(announce.data.data));
+                } else {
+                    // if the credentials are wrong
+                    dispatch(CreateAnnounceDataFail(announce.data.msg))
+                }
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 }

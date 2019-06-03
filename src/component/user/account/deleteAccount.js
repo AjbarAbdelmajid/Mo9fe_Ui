@@ -37,10 +37,12 @@ class DeleteAccount extends React.Component {
 
     handleClose() {
         this.setState({ show: false });
+        document.getElementById('TheNav').style.display = 'block';
     }
 
     handleShow() {
         this.setState({ show: true });
+        document.getElementById('TheNav').style.display = 'none';
     }
 
     render() {
