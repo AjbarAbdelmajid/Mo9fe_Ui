@@ -6,6 +6,7 @@ import ProfilePost from './profilesPost'
 import {getUsers} from "../../../../api_calls"
 import {connect}  from 'react-redux'
 import defaultImage from './defaultImage.jpg'
+import {Link} from 'react-router-dom'
 
 
 class Post extends Component {
@@ -55,8 +56,26 @@ class Post extends Component {
             return  owner[0].picture ? owner[0].picture : defaultImage
         }
     };
-    shortTheDescription = (description)=>{
-        return description.substring(0, 130) + '....';
+    shortTheDescription = (postInfo, type)=>{
+        return type === 'announce' ?
+            <>
+            <p>
+                {postInfo.announce_description.substring(0, 130) + ' '}
+                <Link to={'/post/anno/'+postInfo.announce_id } params={{id: postInfo.announce_id}}>
+                    lire la suite
+                </Link>
+            </p>
+            </>
+            :
+            <>
+            <p>
+                {postInfo.profile_description.substring(0, 130)}
+            </p>
+                <Link to={'/post/pro/'+postInfo.id_Profile }>
+                    lire la suite
+                </Link>
+
+            </>
     };
 }
 

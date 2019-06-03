@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Media } from 'react-bootstrap'
-import {Link} from 'react-router-dom'
 import './index.css'
 import {connect}  from 'react-redux'
 import {getProfiles} from "../../../../api_calls"
@@ -32,10 +31,8 @@ class ProfilesPost extends Component {
                                     <Media >
                                         <img src={this.props.postImage(profile.User_id)} className="postListImage" alt="this will show if there is not showing "/>
                                         <Media.Body>
-                                            <Link to={'/post/pro/'+profile.id_Profile }>
-                                                <h3>{profile.profile_title}</h3>
-                                            </Link>
-                                            <p>{this.props.shortTheDescription(profile.profile_description)}</p>
+                                                <h3 className="text-primary">{profile.profile_title}</h3>
+                                            {this.props.shortTheDescription(profile, 'profile')}<br/>
                                             <span className="createdDate">posted at : {profile.createdAt}</span>
                                         </Media.Body>
                                     </Media>

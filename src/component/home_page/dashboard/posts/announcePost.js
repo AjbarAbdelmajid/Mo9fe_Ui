@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Media } from 'react-bootstrap'
-import {Link} from 'react-router-dom'
 import './index.css'
 import {connect}  from 'react-redux'
 import {getAnnounces} from "../../../../api_calls"
@@ -33,10 +32,8 @@ class AnnouncePost extends Component {
                                     <Media >
                                         <img src={this.props.postImage(announce.user_id)} className="postListImage" alt="this will show if there is not showing "/>
                                         <Media.Body>
-                                            <Link to={'/post/anno/'+announce.announce_id }>
-                                                <h3>{announce.announce_title}</h3>
-                                            </Link>
-                                            <p>{this.props.shortTheDescription(announce.announce_description)}</p>
+                                                <h3  className="text-primary">{announce.announce_title}</h3>
+                                            {this.props.shortTheDescription(announce, 'announce')}
                                             <span className="createdDate">posted at : {announce.createdAt}</span>
                                         </Media.Body>
                                     </Media>
