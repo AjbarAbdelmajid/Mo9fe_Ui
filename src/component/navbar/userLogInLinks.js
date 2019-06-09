@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link, Redirect} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Dropdown, NavDropdown } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {logout} from "../../api_calls/users";
 import DeleteAccount from '../user/account/deleteAccount';
-//import CreateAnnounce from '../user/announce/test'
+
 
 const userSignInLink = () => {
 
@@ -15,11 +15,11 @@ const userSignInLink = () => {
             <Link to='..' style={{ textDecoration: 'none' }} className="navBtn mr-1 ml-5 bg-light" > <b>offer de service</b></Link>
 
             <NavDropdown className="navBtn mr-1 ml-5 bg-light" title={<b>mais demandes</b>} >
-                <Link  className="btn btn-outline-light navBtn text-primary" to="/test" >
+                <Link  className="btn btn-outline-light navBtn text-primary" to="/post/anno" >
                     <b>créer une demande</b>
                 </Link>
 
-                <Link  className="btn navBtn  btn-outline-light text-primary" to="/test" >
+                <Link  className="btn navBtn  btn-outline-light text-primary" to="/posts" >
                     <b>lister mais demandes</b>
                 </Link>
             </NavDropdown>
@@ -36,7 +36,7 @@ const userSignInLink = () => {
 
                 <NavDropdown.Divider />
 
-                <Dropdown.Item style={{ textDecoration: 'none' }} onClick={()=>{logout(); return <Redirect push to="/"/>}} className="btn navBtn text-info">
+                <Dropdown.Item style={{ textDecoration: 'none' }} onClick={()=>logout()} className="btn navBtn text-info">
                     <b>logout</b>
                 </Dropdown.Item>
             </NavDropdown>

@@ -5,6 +5,8 @@ import {
     CREATE_ANNOUNCE_BEGIN,
     CREATE_ANNOUNCE_FAILURE,
     CREATE_ANNOUNCE_SUCCESS,
+    GET_USER_ANNOUNCES_SUCCESS,
+    GET_USER_ANNOUNCES_FAILURE,
 } from "../action/announceAction";
 
 const initialState = {
@@ -14,6 +16,8 @@ const initialState = {
     createAnnounceError: null,
     announceIsCreated: false,
     creationBegging: false,
+    userAnnounces: null,
+    userAnnouncesFail: null
 };
 
 const announceReducer = (state = initialState, action)=>{
@@ -56,6 +60,18 @@ const announceReducer = (state = initialState, action)=>{
                 createAnnounceError: action.creationFailed,
                 creationBegging: false,
                 announceIsCreated: false
+            };
+        case GET_USER_ANNOUNCES_SUCCESS:
+            return {
+                ...state,
+                userAnnounces: action.userAnnounces,
+                userAnnouncesFail: null
+            };
+        case GET_USER_ANNOUNCES_FAILURE:
+            return {
+                ...state,
+                userAnnouncesFail: action.userAnnouncesError,
+                userAnnounces: null
             };
         default:
             return state;

@@ -4,6 +4,8 @@ export const GET_ANNOUNCE_FAILURE = 'GET_ANNOUNCE_FAILURE';
 export const CREATE_ANNOUNCE_BEGIN = 'CREATE_ANNOUNCE_BEGIN';
 export const CREATE_ANNOUNCE_SUCCESS = 'CREATE_ANNOUNCE_SUCCESS';
 export const CREATE_ANNOUNCE_FAILURE = 'CREATE_ANNOUNCE_FAILURE';
+export const GET_USER_ANNOUNCES_SUCCESS = 'GET_USER_ANNOUNCE_SUCCESS';
+export const GET_USER_ANNOUNCES_FAILURE = 'GET_USER_ANNOUNCE_FAILURE';
 
 // to inform us that the fetching is begging
 export const AnnounceDataBegging =  ()=>({
@@ -38,4 +40,17 @@ export const CreateAnnounceDataSuccess = data =>({
 export const CreateAnnounceDataFail = error =>({
     type: CREATE_ANNOUNCE_FAILURE,
     creationFailed: error
+});
+
+//-------------------------------
+// get user announces
+export const GetUserAnnouncesSuccess = announces =>({
+    type: GET_USER_ANNOUNCES_SUCCESS,
+    userAnnounces: announces
+});
+
+// in case if an error happened
+export const GetUserAnnouncesFail = error =>({
+    type: GET_USER_ANNOUNCES_FAILURE,
+    userAnnouncesError: error
 });

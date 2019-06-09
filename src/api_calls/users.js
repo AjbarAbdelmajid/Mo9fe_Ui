@@ -81,7 +81,7 @@ export function login(username, password) {
 export function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
-    window.location.href = 'http://localhost:3000/';
+    window.location.href = config.homeUrl;
 }
 
 export function signup(data) {
@@ -119,14 +119,11 @@ export function deleteLoggedAccount(password) {
     return dispatch => {
 
         dispatch(LoginBegging());
-        console.log('the token : ',token);
         return axios.delete(`${config.baseUrl}users/delete/me/${password}`,{headers:{'Authorization':token}})
             .then(user=>{
                 if (user.data.success ){
-                    console.log(user.data);
                     dispatch(DeleteAccountSuccess());
                 } else {
-                    console.log(user.data);
                     dispatch(DeleteAccountFailed(user.data.msg))
                 }
 

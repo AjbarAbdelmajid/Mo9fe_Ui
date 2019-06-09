@@ -8,6 +8,7 @@ import profilePostDetails from './home_page/dashboard/post_details/profilePostDe
 import LoginPage from './home_page/auth/signIn'
 import SignupPage from './home_page/auth/signUp'
 import CreateAnnounce from './user/announce/createAnnounce'
+import ListAllAnnounce from './user/announce/listUserAnnounces'
 
 const Components = () => {
     return(
@@ -19,7 +20,9 @@ const Components = () => {
             <Route path="/post/pro/:id" exact key="3" component={()=><profilePostDetails/>}/>
             <Route path="/signin" exact key="4" component={()=><LoginPage/>}/>
             <Route path="/signup" exact key="5" component={()=><SignupPage/>}/>
-            <Route path="/test" exact key="6" component={()=><CreateAnnounce/>}/>
+            <Route path="/post/anno" exact key="6" component={()=><CreateAnnounce/>}/>
+            <Route path="/posts" exact key="7" component={()=><ListAllAnnounce/>}/>
+            <Route path="/posts/:id" exact key="8" component={()=><ListAllAnnounce/>}/>
             <Footer/>
         </div>
         </BrowserRouter>

@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import CitiesList from '../../home_page/dashboard/search_nav/cities'
 import CatigoriesList from '../../home_page/dashboard/search_nav/categories'
 import {createAnnounce} from "../../../api_calls";
+import { Redirect } from 'react-router-dom';
 
 class CreateAnnounce extends React.Component {
     constructor(props, context) {
@@ -206,7 +207,9 @@ class CreateAnnounce extends React.Component {
                         {this.props.createAnnounceError &&
                         <div className={'alert alert-danger'}>{this.props.createAnnounceError}</div>
                         }
-                        {/*redirect to the announce list page this.props.announceIsCreated */}
+                        {this.props.announceIsCreated &&
+                        <Redirect to="/posts" />
+                        }
 
                     </Form>
             </div>

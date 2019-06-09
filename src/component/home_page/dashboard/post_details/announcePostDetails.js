@@ -9,46 +9,49 @@ import {connect} from 'react-redux'
 import {getAllImages} from "../../../../api_calls/uploadImages";
 
 class AnnouncePostDetail extends Component {
+    componentWillMount(){
+        this.forceUpdate();
+    }
     componentDidMount(){
         this.props.getAllImages();
     }
-    //get the selected announce with the neame of the city and the category
-    announce =  this.props.announces.filter(element => element.announce_id === this.props.match.params.id);
-    city = this.props.cities.filter(city => city.code_postal === this.announce[0].code_postal);
-    category = this.props.categories.filter(category => category.categories_id === this.announce[0].categories_id);
 
     render(){
+        //get the selected announce with the name of the city and the category
+        const announce =  this.props.announces.filter(element =>{ return element.announce_id === this.props.match.params.id});
+        const city = this.props.cities.filter(city => city.code_postal === announce[0].code_postal);
+        const category = this.props.categories.filter(category => category.categories_id === announce[0].categories_id);
         return (
             <div className="container-fluid mr-5 PostDetails" >
                 <Form>
 
                     <Form.Group>
-                        <Form.Label><h3 >{this.announce[0].announce_title} </h3></Form.Label><br/>
+                        <Form.Label><h3 >{announce[0].announce_title} </h3></Form.Label><br/>
 
                         <img src={locationIcon} className="detailsImage" alt="location icon"/>
 
-                        <Form.Label className="smallText">{this.city[0].city_name}</Form.Label><br/>
+                        <Form.Label className="smallText">{city[0].city_name}</Form.Label><br/>
 
                         <img src={bagIcon} className="detailsImage" alt="bag icon"/>
 
-                        <Form.Label className="smallText">{this.category[0].categories_name}</Form.Label>
+                        <Form.Label className="smallText">{category[0].categories_name}</Form.Label>
                     </Form.Group>
 
                     <Form.Group>
-                        <Form.Text className="description">{this.announce[0].announce_description}</Form.Text>
+                        <Form.Text className="description">{announce[0].announce_description}</Form.Text>
                     </Form.Group>
 
                     <Form.Group>
-                        <Form.Label> phone : {this.announce[0].phone}</Form.Label>
+                        <Form.Label> phone : {announce[0].phone}</Form.Label>
                     </Form.Group>
 
-                    {this.imagesSlide()}
+                    {this.imagesSlide(announce[0].announce_id)}
                 </Form>
             </div>
         )
     }
-    imagesSlide = ()=>{
-        let images = this.props.allImages.filter(image => image.announce_id === this.announce[0].announce_id);
+    imagesSlide = (id)=>{
+        let images = this.props.allImages.filter(image => image.announce_id === id);
         if (images){
             return (
                 <Carousel className="imagesContainer" >

@@ -1,12 +1,12 @@
 import axios from 'axios'
 import config from '../config'
 import {
-    AnnounceDataFail,
-    AnnounceDataBegging,
+    AnnounceDataFail, GetUserAnnouncesSuccess,
+    AnnounceDataBegging, GetUserAnnouncesFail,
     AnnounceDataSuccess,
     CreateAnnounceDataBegging,
     CreateAnnounceDataFail,
-    CreateAnnounceDataSuccess
+    CreateAnnounceDataSuccess,
 } from "../store/action/announceAction";
 
 // get the announces data
@@ -46,6 +46,29 @@ export function createAnnounce(data){
                 } else {
                     // if the credentials are wrong
                     dispatch(CreateAnnounceDataFail(announce.data.msg))
+                }
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+}
+
+export function getUserAnnounces(){
+
+    // extract the token
+    const token = JSON.parse(localStorage.getItem('user')).token;
+    return dispatch => {
+
+        // send data to the api
+        return axios.get(`${config.baseUrl}announce/list/my/announces`, {headers: {'Authorization':token}} )
+            .then(announce=>{
+                if (announce.data.success ){
+                    dispatch(GetUserAnnouncesSuccess(announce.data.data));
+                } else {
+                    // if the credentials are wrong
+                    dispatch(GetUserAnnouncesFail(announce.data.msg))
                 }
 
             })

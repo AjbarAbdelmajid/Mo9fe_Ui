@@ -24,3 +24,21 @@
 .btnForPost {
     margin-bottom: 20px;
 }
+
+.myPostsList {
+    height: 8vh;
+    margin-left: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.listContainer {
+    margin-top: 10vh;
+
+}
+.theList {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    background-image: linear-gradient(to right,  #F8F8F8 , white);
+}
