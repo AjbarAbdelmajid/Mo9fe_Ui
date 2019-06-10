@@ -4,8 +4,8 @@ import {
     AnnounceDataFail, GetUserAnnouncesSuccess,
     AnnounceDataBegging, GetUserAnnouncesFail,
     AnnounceDataSuccess,
-    CreateAnnounceDataBegging,
-    CreateAnnounceDataFail,
+    CreateAnnounceDataBegging, DeleteAnnounceSuccess,
+    CreateAnnounceDataFail, DeleteAnnounceFailed,
     CreateAnnounceDataSuccess,
 } from "../store/action/announceAction";
 
@@ -75,5 +75,28 @@ export function getUserAnnounces(){
             .catch(err => {
                 console.log(err);
             });
+    }
+}
+
+export function deleteAnnounce(announce_id) {
+
+    // extract the token
+    const token = JSON.parse(localStorage.getItem('user')).token;
+
+    return dispatch => {
+
+        return axios.delete(`${config.baseUrl}announce/delete/${announce_id}`,{headers:{'Authorization':token}})
+            .then(user=>{
+                if (user.data.success ){
+                    dispatch(DeleteAnnounceSuccess());
+                } else {
+                    dispatch(DeleteAnnounceFailed(user.data.msg))
+                }
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
     }
 }

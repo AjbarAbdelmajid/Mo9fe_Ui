@@ -42,3 +42,6 @@
     border: 0;
     background-image: linear-gradient(to right,  #F8F8F8 , white);
 }
+.listDetails {
+    padding-left: 100px;
+}

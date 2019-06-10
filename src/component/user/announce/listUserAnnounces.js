@@ -1,10 +1,10 @@
 import React from 'react';
 import {withRouter, NavLink } from 'react-router-dom';
-import {Media} from 'react-bootstrap'
+import {Media, Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import {connect} from 'react-redux';
-import {getUserAnnounces} from "../../../api_calls/announce";
+import {getUserAnnounces, deleteAnnounce} from "../../../api_calls";
 import Details from '../../home_page/dashboard/post_details/announcePostDetails';
 
 
@@ -76,8 +76,15 @@ class ListPosts extends React.Component {
 
                         {/* the announce details*/}
                         <div className="col-md-7 container-fluid">
-                            {match.params.id !== undefined ? <Details old={match.params.id}/> : <p> </p>}
-
+                            {match.params.id !== undefined ?
+                                <>
+                                <Details old={match.params.id}/>
+                                <div className="listDetails">
+                                <Button className="btn btn-danger mr-2 " onClick={this.handleDelete}> delete Post </Button>
+                                <Button> Update Post </Button>
+                                </div>
+                                </> : <p> </p>
+                            }
                         </div>
                     </div>
 
@@ -86,16 +93,26 @@ class ListPosts extends React.Component {
             )
         }
     }
+    handleDelete = ()=>{
+        let isConfirm = window.confirm("vous voullez supremer se post!");
+        if (isConfirm){
+            this.props.deleteAnnounce(this.props.match.params.id);
+            document.location.reload(true);
+        }
+    }
 }
 
 const mapStateToProps = state =>{
     return {
         userAnnounces: state.announce.userAnnounces,
         userAnnouncesError: state.announce.userAnnouncesFail,
+        isAnnounceDeleted: state.announce.announceIsDeleted,
+        deleteAnnounceFailMsg: state.announce.deleteAnnounceFailMsg
     }
 };
 const mapDispatchToProps = {
-    getUserAnnounces : () => getUserAnnounces()
+    getUserAnnounces : () => getUserAnnounces(),
+    deleteAnnounce : announce_id => deleteAnnounce(announce_id)
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListPosts))

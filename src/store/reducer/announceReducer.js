@@ -7,6 +7,9 @@ import {
     CREATE_ANNOUNCE_SUCCESS,
     GET_USER_ANNOUNCES_SUCCESS,
     GET_USER_ANNOUNCES_FAILURE,
+    DELETE_ANNOUNCE_SUCCESS,
+    DELETE_ANNOUNCE_FAILED,
+    CREATE_ANNOUNCE_STOP
 } from "../action/announceAction";
 
 const initialState = {
@@ -17,7 +20,9 @@ const initialState = {
     announceIsCreated: false,
     creationBegging: false,
     userAnnounces: null,
-    userAnnouncesFail: null
+    userAnnouncesFail: null,
+    announceIsDeleted: false,
+    deleteAnnounceFailMsg: null
 };
 
 const announceReducer = (state = initialState, action)=>{
@@ -61,6 +66,11 @@ const announceReducer = (state = initialState, action)=>{
                 creationBegging: false,
                 announceIsCreated: false
             };
+        case CREATE_ANNOUNCE_STOP:
+            return {
+                ...state,
+                announceIsCreated: false
+            };
         case GET_USER_ANNOUNCES_SUCCESS:
             return {
                 ...state,
@@ -72,6 +82,16 @@ const announceReducer = (state = initialState, action)=>{
                 ...state,
                 userAnnouncesFail: action.userAnnouncesError,
                 userAnnounces: null
+            };
+        case DELETE_ANNOUNCE_SUCCESS:
+            return {
+                ...state,
+                announceIsDeleted: action.deleteAnnounceSuccess
+            };
+        case DELETE_ANNOUNCE_FAILED:
+            return {
+                ...state,
+                deleteAnnounceFailMsg: action.deleteAnnounceFailMsg
             };
         default:
             return state;

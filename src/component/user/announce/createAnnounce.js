@@ -7,6 +7,7 @@ import CitiesList from '../../home_page/dashboard/search_nav/cities'
 import CatigoriesList from '../../home_page/dashboard/search_nav/categories'
 import {createAnnounce} from "../../../api_calls";
 import { Redirect } from 'react-router-dom';
+import {CreateAnnounceStop} from "../../../store/action/announceAction";
 
 class CreateAnnounce extends React.Component {
     constructor(props, context) {
@@ -26,32 +27,33 @@ class CreateAnnounce extends React.Component {
 
     handleSubmit = (e)=>{
         const {category, price, city, phone, announceTitle, announceDescription, pictures} = this.state;
-        let picturesLength = pictures.length;
+        const formData = new FormData();
 
         e.preventDefault();
         this.setState({submitted: true});
+
         // break if the password is null
         if (!category || !city || !phone || announceDescription.length<250 || announceTitle.match(/[|\\/~^:,;?!&%$@*+]/) || announceTitle.length<10 || !phone.match(/\d/g)){return;}
         if (pictures){
+            let picturesLength = pictures.length;
             if (pictures.length !== Array.from(pictures).filter(picture=>new RegExp('gif').test(picture.name.toLowerCase()) || new RegExp('jpg').test(picture.name.toLowerCase()) || new RegExp('png').test(picture.name.toLowerCase()) || new RegExp('jpeg').test(picture.name.toLowerCase())).length)
             {return;}
             else if (pictures.length !== Array.from(pictures).filter(picture=> picture.size <= 1024 * 1024 * 2 ).length)
             {return;}
+
+            // add images to the data form
+            while(picturesLength >0){
+                formData.append('upload_img', pictures[picturesLength-1]);
+                picturesLength -=1;
+            }
         }
 
         // store data  in object to send it
-        const formData = new FormData();
         formData.append('code_postal', city);
         formData.append('categories_id', category);
 
-        // add images to the data form
-        while(picturesLength >0){
-            formData.append('upload_img', pictures[picturesLength-1]);
-            picturesLength -=1;
-        }
         // skip the price property if not selected
         if(price !== 0){formData.append('price', price)}
-
         formData.append('phone', phone);
         formData.append('announce_title', announceTitle);
         formData.append('announce_description', announceDescription);
@@ -207,16 +209,20 @@ class CreateAnnounce extends React.Component {
                         {this.props.createAnnounceError &&
                         <div className={'alert alert-danger'}>{this.props.createAnnounceError}</div>
                         }
-                        {this.props.announceIsCreated &&
-                        <Redirect to="/posts" />
+                        {this.props.announceIsCreated ? (<><Redirect to="/posts" />{this.props.stopIt()}</>) : false
                         }
 
                     </Form>
             </div>
         );
     }
-
 }
+function stopIt(){
+    return dispatch=>{
+        dispatch(CreateAnnounceStop());
+    }
+}
+
 const mapStateToProps = state =>{
     return {
         cities : state.city.items,
@@ -227,7 +233,8 @@ const mapStateToProps = state =>{
     }
 };
 const mapDispatchToProps = {
-    createAnnounce : data => createAnnounce(data)
+    createAnnounce : data => createAnnounce(data),
+    stopIt: () => stopIt(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateAnnounce)
