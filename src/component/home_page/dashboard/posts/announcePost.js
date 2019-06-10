@@ -30,11 +30,14 @@ class AnnouncePost extends Component {
                             return (
                                 <div className="card-content " key={announce.announce_id}>
                                     <Media >
-                                        <img src={this.props.postImage(announce.user_id)} className="postListImage" alt="this will show if there is not showing "/>
                                         <Media.Body>
-                                                <h3  className="text-primary">{announce.announce_title}</h3>
-                                            {this.props.shortTheDescription(announce, 'announce')}
-                                            <span className="createdDate">posted at : {announce.createdAt}</span>
+                                            <h3  className="text-primary">
+                                            <img src={this.props.postImage(announce.user_id)} className="postListImage" alt="this will show if there is not showing "/>
+                                            {announce.announce_title}</h3>
+                                            <div className="description">
+                                                {this.props.shortTheDescription(announce, 'announce')}
+                                                <span className="createdDate">posted at : {announce.createdAt}</span>
+                                            </div>
                                         </Media.Body>
                                     </Media>
                                 </div>

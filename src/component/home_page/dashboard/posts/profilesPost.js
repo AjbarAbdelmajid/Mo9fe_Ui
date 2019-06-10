@@ -29,11 +29,15 @@ class ProfilesPost extends Component {
                             return (
                                 <div className="card-content " key={profile.id_Profile}>
                                     <Media >
-                                        <img src={this.props.postImage(profile.User_id)} className="postListImage" alt="this will show if there is not showing "/>
                                         <Media.Body>
-                                                <h3 className="text-primary">{profile.profile_title}</h3>
-                                            {this.props.shortTheDescription(profile, 'profile')}<br/>
-                                            <span className="createdDate">posted at : {profile.createdAt}</span>
+                                                <h3 className="text-primary">
+                                                    <img src={this.props.postImage(profile.User_id)} className="postListImage" alt="this will show if there is not showing "/>
+                                                    {profile.profile_title}
+                                                    </h3>
+                                            <div className="description">
+                                                {this.props.shortTheDescription(profile, 'profile')}<br/>
+                                                <span className="createdDate">posted at : {profile.createdAt}</span>
+                                            </div>
                                         </Media.Body>
                                     </Media>
                                 </div>
