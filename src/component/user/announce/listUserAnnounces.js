@@ -1,10 +1,10 @@
 import React from 'react';
 import {withRouter, NavLink } from 'react-router-dom';
-import {Media, Button} from 'react-bootstrap'
+import {Media} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import {connect} from 'react-redux';
-import {getUserAnnounces, deleteAnnounce} from "../../../api_calls";
+import {getUserAnnounces, deleteAnnounce, getAnnounces} from "../../../api_calls";
 import Details from '../../home_page/dashboard/post_details/announcePostDetails';
 
 
@@ -12,6 +12,7 @@ class ListPosts extends React.Component {
 
     componentDidMount(){
         this.props.getUserAnnounces();
+        this.props.getAnnounces();
     }
 
     render() {
@@ -75,16 +76,9 @@ class ListPosts extends React.Component {
                         </div>
 
                         {/* the announce details*/}
-                        <div className="col-md-7 container-fluid">
+                        <div className="col-md-7 container-fluid leftContainer">
                             {match.params.id !== undefined ?
-                                <>
-                                <Details old={match.params.id}/>
-                                <div className="listDetails">
-                                <Button className="btn btn-danger mr-2 " onClick={this.handleDelete}> delete Post </Button>
-                                <Button> Update Post </Button>
-                                </div>
-                                </> : <p> </p>
-                            }
+                                <Details isUserList={true} handleDelete={this.handleDelete}/> : <></>}
                         </div>
                     </div>
 
@@ -112,7 +106,8 @@ const mapStateToProps = state =>{
 };
 const mapDispatchToProps = {
     getUserAnnounces : () => getUserAnnounces(),
-    deleteAnnounce : announce_id => deleteAnnounce(announce_id)
+    deleteAnnounce : announce_id => deleteAnnounce(announce_id),
+    getAnnounces : () => getAnnounces(),
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListPosts))

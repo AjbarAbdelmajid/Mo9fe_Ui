@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
-import {Form, Carousel} from 'react-bootstrap'
+import {Form, Carousel, Button} from 'react-bootstrap'
 import {withRouter} from 'react-router-dom'
 import bagIcon from './bag_icon.png'
 import locationIcon from './location_icon.png'
@@ -24,6 +24,12 @@ class AnnouncePostDetail extends Component {
         return (
             <div className="container-fluid mr-5 PostDetails" >
                 <Form>
+                    {this.props.isUserList &&
+                        <Form.Group>
+                            <Button className="btn btn-danger mr-2 " onClick={this.props.handleDelete}> delete Post </Button>
+                            <Button> Update Post </Button>
+                        </Form.Group>
+                        }
 
                     <Form.Group>
                         <Form.Label><h3 >{announce[0].announce_title} </h3></Form.Label><br/>
@@ -52,7 +58,7 @@ class AnnouncePostDetail extends Component {
     }
     imagesSlide = (id)=>{
         let images = this.props.allImages.filter(image => image.announce_id === id);
-        if (images){
+        if (images.length >0){
             return (
                 <Carousel className="imagesContainer" >
                     {images.map(img =>  {
@@ -65,7 +71,7 @@ class AnnouncePostDetail extends Component {
                 </Carousel>
             )
         } else {
-            return (<div> </div>)
+            return (<div className="replaceImageSpace"> </div>)
         }
     }
 }
