@@ -12,7 +12,7 @@ const userSignInLink = () => {
         <div className=" form-check-inline items" >
 
 
-            <Link to='..' style={{ textDecoration: 'none' }} className="navBtn mr-1 ml-5 bg-light" > <b>offer de service</b></Link>
+            <Link to='/demand' style={{ textDecoration: 'none' }} className="navBtn mr-1 ml-5 bg-light" > <b>offer de service</b></Link>
 
             <NavDropdown className="navBtn mr-1 ml-5 bg-light" title={<b>mais demandes</b>} >
                 <Link  className="btn btn-outline-light navBtn text-primary" to="/post/anno" >
@@ -26,17 +26,17 @@ const userSignInLink = () => {
 
             <NavDropdown className="navBtn mr-5 ml-5  bg-light " title={<b>account</b>} >
 
-                <Dropdown.Item style={{ textDecoration: 'none' }} className="btn navBtn text-info" >
+                <Dropdown.Item style={{ textDecoration: 'none' }} className="btn navBtn text-primary" >
                      <b>update account</b>
                 </Dropdown.Item>
 
-                <Dropdown.Item style={{ textDecoration: 'none' }} className="btn navBtn text-info"  >
+                <Dropdown.Item style={{ textDecoration: 'none' }} className="btn navBtn text-primary"  >
                     <DeleteAccount/>
                 </Dropdown.Item>
 
                 <NavDropdown.Divider />
 
-                <Dropdown.Item style={{ textDecoration: 'none' }} onClick={()=>logout()} className="btn navBtn text-info">
+                <Dropdown.Item style={{ textDecoration: 'none' }} onClick={()=>logout()} className="btn navBtn text-primary">
                     <b>logout</b>
                 </Dropdown.Item>
             </NavDropdown>

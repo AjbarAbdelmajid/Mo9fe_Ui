@@ -92,7 +92,7 @@ export function signup(data) {
         return axios.post(`${config.baseUrl}signup`, data, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
             .then(user=>{
                 if (user.data.success ){
-
+                    console.log(user.data);
                     // note => to get the token you need to parse the user local storage first
                     localStorage.setItem('user',JSON.stringify(user.data));
                     dispatch(LoginSuccess(user.data.data));

@@ -153,11 +153,10 @@ class CreateAnnounce extends React.Component {
                             <Form.Label>telephone</Form.Label>
                             <Form.Control as="input"
                                           type="tel"
-                                          value={phone}
+                                          value={phone.replace(/([a-z]|[|\\/~^:,;?!&%$@*éàçè)])/g, '')}
                                           name="phone"
                                           onChange={this.handleChange}
                                           placeholder="06..."
-                                          pattern="[0-9]{4}[0-9]{2}[0-9]{4}"
                                           className={'' + (submitted && (!phone || !phone.match(/\d/g) ? 'is-invalid' : ''))}
                             />
                             {submitted && !phone && !phone.match(/\d/g) &&

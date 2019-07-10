@@ -13,7 +13,7 @@ class NavBar extends React.Component {
         return(
             <div id="TheNav">
                 <Navbar className=" navbar navbar-light bg-light">
-                    <Link to='/' className=" btn-outline-primary mr-auto"><img src={homePageIcon} width='50px' height='50px' alt="home page"/></Link>
+                    <Link to='/' className=" btn mr-auto homeIcon"><img src={homePageIcon}  width='50px' height='50px' alt="home page"/></Link>
                     {this.props.loggedIn !== null ? (<div><UserLogInLinks/><Redirect push to="/"/></div>): <Logoutlinks/>}
                 </Navbar>
             </div>

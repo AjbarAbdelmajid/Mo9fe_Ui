@@ -54,6 +54,7 @@ class LoginPage extends React.Component {
                     <FormGroup controlId="password" >
                         <FormLabel><h5>Password</h5></FormLabel>
                         <FormControl
+
                             name = 'password'
                             value={password}
                             onChange={this.handleChange}
